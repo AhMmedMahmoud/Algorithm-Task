@@ -40,7 +40,6 @@ pair<int, vector<int>> solution(bool switches[], int no_of_switches, int n)
 			cout << dp_seq[n - 2][i] << "\t";
 	}
 	//--------------------- turn off toggle right switch to n-2 switches from right----------------
-	switches[no_of_switches - n] = 0;
 	cout << no_of_switches - n << "\t";
 	sum++;
 	//--------------------- turn on n-2 switches from right---------------------------------------- 
