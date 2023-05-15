@@ -7,29 +7,29 @@ const int MAX = 100;
 int dp_moves[MAX];
 vector<vector<int>> dp_seq(MAX, vector<int>());
 
-pair<int, vector<int>> solution(bool switches[], int no_of_switches, int n)
+pair<int, vector<int>> solution(int no_of_switches, int n)
 {
-	//------------------------------sefety codition------------------------------------
+	//------------------------------sefety codition--------------------------------------------
 	if (n == 0 || n < 1) {
 		vector<int> vec = { };
 		return make_pair(0, vec);
 	}
-	//------------------------------------base case------------------------------------
+	//------------------------------------base case---------------------------------------------
 	if (n == 1) {
 		cout << no_of_switches - 1 << "\t";
 		vector<int> vec = { no_of_switches - 1 };
 		return make_pair(1, vec);
 	}
-	//------------------------------------base case------------------------------------
+	//------------------------------------base case---------------------------------------------
 	if (n == 2) {
 		cout << no_of_switches - 2 << "\t" << no_of_switches - 1 << "\t";
 		vector<int> vec = { no_of_switches - 2,no_of_switches - 1 };
 		return make_pair(2, vec);
 	}
 	int sum = 0;
-	//----------------------------turn off n-2 switches from right----------------------------
+	//----------------------------turn off n-2 switches from right-------------------------------
 	if (dp_moves[n - 2] == -1) {
-		pair<int, vector<int>> result = solution(switches, no_of_switches, n - 2);
+		pair<int, vector<int>> result = solution(no_of_switches, n - 2);
 		dp_moves[n - 2] = result.first;
 		dp_seq[n - 2] = result.second;
 		sum = dp_moves[n - 2];
@@ -52,7 +52,7 @@ pair<int, vector<int>> solution(bool switches[], int no_of_switches, int n)
 		cout << no_of_switches - 1 << "\t";
 	//---------------------- solve same problem for n-1 switches------------------------------------
 	if (dp_moves[n - 1] == -1) {
-		pair<int, vector<int>> result = solution(switches, no_of_switches, n - 1);
+		pair<int, vector<int>> result = solution(no_of_switches, n - 1);
 		dp_moves[n - 1] = result.first;
 		dp_seq[n - 1] = result.second;
 		sum += dp_moves[n - 1];
@@ -62,7 +62,7 @@ pair<int, vector<int>> solution(bool switches[], int no_of_switches, int n)
 		for (int i = 0; i < dp_seq[n - 1].size(); i++)
 			cout << dp_seq[n - 1][i] << "\t";
 	}
-	//----------------------returning min number and sequece------------------------------------
+	//----------------------returning min number and sequece---------------------------------------
 	vector<int> vec;
 	for (int i = 0; i < dp_seq[n - 2].size(); i++)
 		vec.push_back(dp_seq[n - 2][i]);
@@ -79,11 +79,8 @@ int main()
 	for (int i = 0; i < MAX; i++) {
 		dp_moves[i] = -1;
 	}
-	int no_of_switches = 4;
-	bool* switches = new bool[no_of_switches];
-	for (int i = 0; i < no_of_switches; i++)
-		switches[i] = true;
+	int no_of_switches = 5;
 	cout << "sequence : ";
-	pair<int, vector<int>> result = solution(switches, no_of_switches, no_of_switches);
+	pair<int, vector<int>> result = solution(no_of_switches, no_of_switches);
 	cout << "\nmin number = " << result.first << endl;
 }
